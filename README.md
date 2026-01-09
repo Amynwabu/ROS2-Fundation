@@ -1,5 +1,7 @@
 # ROS2 MSc Applied AI - Teaching Materials
 
+
+[![Open in Dev Container](https://img.shields.io/badge/Dev_Container-Open-blue?logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Amynwabu/ros2-msci-applied-ai)
 ROS2 teaching materials for MSc Applied AI students - includes code examples, packages, and tutorials organized by lesson.
 
 ## 📋 Prerequisites
@@ -10,6 +12,35 @@ ROS2 teaching materials for MSc Applied AI students - includes code examples, pa
 - Familiarity with Linux terminal commands
 
 ## 🚀 Getting Started
+
+### Option 1: Use Dev Container (Recommended) ✨
+
+The easiest way to get started! This repository includes a pre-configured VS Code Dev Container with ROS2 Humble.
+
+**One-Click Setup:**
+
+1. Install [VS Code](https://code.visualstudio.com/) and [Docker](https://www.docker.com/products/docker-desktop/)
+2. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+3. Click the badge above or use this link:
+   - [![Open in Dev Container](https://img.shields.io/badge/Dev_Container-Open-blue?logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Amynwabu/ros2-msci-applied-ai)
+
+**Or manually:**
+```bash
+# Clone and open in VS Code
+git clone https://github.com/Amynwabu/ros2-msci-applied-ai.git
+cd ros2-msci-applied-ai
+code .
+# Then: Ctrl+Shift+P -> "Dev Containers: Reopen in Container"
+```
+
+**What's Included:**
+- 🐳 ROS2 Humble Desktop Full (pre-installed)
+- 🐍 Python 3.10 with all ROS2 tools
+- 🛠️ VS Code extensions for ROS2, Python, C++
+- 📦 Colcon build tools pre-configured
+- ✅ Everything works out of the box!
+
+### Option 2: Manual Local Setup
 
 ### Clone the Repository
 
