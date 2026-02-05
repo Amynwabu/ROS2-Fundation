@@ -1,0 +1,9 @@
+# REQUEST (what the client sends)
+string item_name
+int32 quantity
+
+---
+
+# RESPONSE (what the server sends back)
+bool accepted
+string message
