@@ -39,11 +39,12 @@ ament_package()
 
 ```bash
 # Build
-colcon build --packages-select my_package
+cd ~/ros2_ws
+colcon build --packages-select test2_py_pkg
 source install/setup.bash
 
 # Run launch file
-ros2 launch my_package my_system.launch.py
+ros2 launch test2_py_pkg restaurant_system.launch.py
 ```
 
 ## Features
