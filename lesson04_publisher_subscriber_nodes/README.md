@@ -1,19 +1,6 @@
-# Lesson 04: Publisher & Subscriber Nodes
+# Publisher & Subscriber Nodes
 
-## Learning Objectives
 
-After this lesson, you will be able to:
-- Create Publisher nodes that send messages to ROS2 topics
-- Create Subscriber nodes that receive messages from ROS2 topics
-- Understand the asynchronous pub-sub communication pattern
-- Build and run publisher and subscriber nodes
-- Debug topic communication using ROS2 command-line tools
-
-## Prerequisites
-
-- Lesson 01: ROS2 environment properly configured
-- Lesson 02: Understanding of ROS2 packages and nodes
-- Lesson 03: Understanding of ROS2 topics
 
 ## Real-World Analogy: Restaurant Order System
 
@@ -55,87 +42,18 @@ Waiter (Publisher)              Topic (/orders)              Chef (Subscriber)
 
 ### Step 1: Publisher Node (waiter.py)
 
-```python
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import String
+```
+Navigate to: cd ~/ros2_ws/src/test2_py_pkg/test2_py_pkg
 
-class WaiterNode(Node):
-    def __init__(self):
-        super().__init__('waiter')
-        
-        # Create publisher
-        self.publisher = self.create_publisher(
-            String,        # message type
-            'orders',      # topic name
-            10             # queue size
-        )
-        
-        # Create timer (1 second)
-        self.timer = self.create_timer(1.0, self.publish_order)
-        self.order_count = 0
-        self.get_logger().info('Waiter node started!')
-    
-    def publish_order(self):
-        msg = String()
-        self.order_count += 1
-        msg.data = f'Order #{self.order_count}: Burger'
-        self.publisher.publish(msg)
-        self.get_logger().info(f'Announcing: {msg.data}')
-
-def main(args=None):
-    rclpy.init(args=args)
-    node = WaiterNode()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        node.destroy_node()
-        rclpy.shutdown()
-
-if __name__ == '__main__':
-    main()
+Create file: waiter.py
 ```
 
 ### Step 2: Subscriber Node (chef.py)
 
-```python
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import String
+```
+Navigate to: cd ~/ros2_ws/src/test2_py_pkg/test2_py_pkg
 
-class ChefNode(Node):
-    def __init__(self):
-        super().__init__('chef')
-        
-        # Create subscription
-        self.subscription = self.create_subscription(
-            String,               # message type
-            'orders',             # topic name
-            self.order_callback,  # callback function
-            10                    # queue size
-        )
-        self.get_logger().info('Chef node started! Listening for orders...')
-    
-    def order_callback(self, msg):
-        # This function is called automatically when a message arrives
-        self.get_logger().info(f'Received order: {msg.data}')
-        self.get_logger().info('Starting to cook...')
-
-def main(args=None):
-    rclpy.init(args=args)
-    node = ChefNode()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        node.destroy_node()
-        rclpy.shutdown()
-
-if __name__ == '__main__':
-    main()
+Create file: chef.py
 ```
 
 ## Building and Running
@@ -168,7 +86,7 @@ Expected output:
 [INFO] [waiter]: Announcing: Order #2: Burger
 [INFO] [waiter]: Announcing: Order #3: Burger
 ...
-```
+
 
 ### Step 5: Run the Subscriber (Terminal 2)
 ```bash
