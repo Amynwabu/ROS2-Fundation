@@ -1,6 +1,6 @@
 # ROS2 Topics 
 
-### Creating a Publisher Node (waiter.py)
+### Creating a Publisher Node
 Navigate to: ~/ros2_ws/src/test2_py_pkg/test2_py_pkg/
 Create a new file: `topic_creator.py`
 
