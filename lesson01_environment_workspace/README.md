@@ -67,6 +67,17 @@ source ~/ros2_ws/install/setup.bash
 echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
 ```
 
+## Your workspace structure
+
+```
+os2_ws/                    # Your workspace root
+├── src/                    # Where all your source code lives
+│   └── test2_py_pkg/       # Your package (contains mynode.py, setup.py, etc.)
+├── build/                  # Temporary files during compilation (auto-generated)
+├── install/                # Final binaries and executables go here (auto-generated)
+└── log/                    # Build logs for debugging (auto-generated)
+ ```
+
 ## Verification
 
 Verify your workspace is properly set up:
