@@ -1,205 +1,25 @@
-# Lesson 03: ROS2 Topics and Publish-Subscribe Pattern
-
-## Learning Objectives
-
-After completing this lesson, you should be able to:
-
-- Understand ROS2 Topics and their role in asynchronous communication
-- Grasp the Publisher-Subscriber (Pub-Sub) design pattern
-- Create Publisher nodes that send data to topics
-- Create Subscriber nodes that receive data from topics
-- Implement practical examples with the Waiter and Chef nodes
-- Use ROS2 command-line tools to inspect and debug topics
-
-## Key Concepts
-
-### What are ROS2 Topics?
-
-**Topics** are named buses for asynchronous, many-to-many communication between ROS2 nodes.
-
-**Key Characteristics:**
-- **Named Communication Channels**: Each topic has a unique name (e.g., `/orders`, `/sensor_data`)
-- **Asynchronous**: Publishers don't wait for subscribers to receive messages
-- **Many-to-Many**: Multiple publishers and multiple subscribers can communicate on the same topic
-- **Decoupled**: Nodes don't need to know about each other's existence
-- **Continuous**: Best for streaming data like sensors, cameras, or continuous sensor streams
-
-### Publisher-Subscriber Pattern
-
-**Publishers** send messages to a topic without knowing who (if anyone) is listening.
-
-**Subscribers** listen to a topic and receive all messages published there.
-
-**Real-World Analogy - Restaurant:**
-- **Waiter (Publisher)**: Takes customer orders and announces them loudly in the kitchen
-- **/orders (Topic)**: The communication channel where orders are announced
-- **Chef (Subscriber)**: Listens for orders on the kitchen counter and starts cooking
-- **Decoupling**: The waiter doesn't need to know if the chef is in the kitchen or how many chefs are there. They just announce orders to the topic.
-
-### Why Use the Pub-Sub Pattern?
-
-1. **Decoupling**: Nodes are independent and don't need direct connections
-2. **Scalability**: Add more subscribers without modifying the publisher
-3. **Flexibility**: One publisher can have zero or many subscribers
-4. **Real-time Data**: Perfect for continuous sensor data streams
-5. **Asynchronous Communication**: Non-blocking, fire-and-forget messaging
-
-## Creating Publisher and Subscriber Nodes
-
-### Part 1: Understanding Topics
-
-When you create a publisher or subscriber for a topic, ROS2 automatically creates the topic if it doesn't exist.
+# ROS2 Topics 
 
 ### Creating a Publisher Node (waiter.py)
+Navigate to: ~/ros2_ws/src/test2_py_pkg/test2_py_pkg/
+Create a new file: `topic_creator.py`
 
-Create a new file: `src/test2_py_pkg/test2_py_pkg/waiter.py`
-
-```python
-#!/usr/bin/env python3
-
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import String
-
-
-class WaiterNode(Node):
-    def __init__(self):
-        super().__init__('waiter')
-        
-        # Create a publisher that sends String messages to the '/orders' topic
-        # Arguments: Message type, topic name, queue size (10)
-        self.publisher = self.create_publisher(String, 'orders', 10)
-        
-        # Create a timer that calls publish_order every 1.0 second (1Hz frequency)
-        self.timer = self.create_timer(1.0, self.publish_order)
-        
-        self.order_count = 0
-        self.get_logger().info('Waiter node started!')
-    
-    def publish_order(self):
-        msg = String()
-        self.order_count += 1
-        msg.data = f'Order #{self.order_count}: Burger'
-        self.publisher.publish(msg)
-        self.get_logger().info(f'Announcing: {msg.data}')
-
-
-def main(args=None):
-    rclpy.init(args=args)
-    node = WaiterNode()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        node.destroy_node()
-        rclpy.shutdown()
-
-
-if __name__ == '__main__':
-    main()
 ```
 
-### Creating a Subscriber Node (chef.py)
-
-Create a new file: `src/test2_py_pkg/test2_py_pkg/chef.py`
-
-```python
-#!/usr/bin/env python3
-
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import String
-
-
-class ChefNode(Node):
-    def __init__(self):
-        super().__init__('chef')
-        
-        # Create a subscription to listen to the '/orders' topic
-        # Arguments: Message type, topic name, callback function, queue size (10)
-        self.subscription = self.create_subscription(
-            String,
-            'orders',
-            self.order_callback,
-            10
-        )
-        
-        # Prevent unused variable warning
-        self.subscription
-        
-        self.get_logger().info('Chef node started! Listening for orders...')
-    
-    def order_callback(self, msg):
-        """This callback is triggered whenever a message arrives on /orders"""
-        self.get_logger().info(f'Received order: {msg.data}')
-        self.get_logger().info('Starting to cook...')
-
-
-def main(args=None):
-    rclpy.init(args=args)
-    node = ChefNode()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        node.destroy_node()
-        rclpy.shutdown()
-
-
-if __name__ == '__main__':
-    main()
-```
-
-### Key Concepts in Publisher Code
-
-**Creating a Publisher**:
-```python
-self.publisher = self.create_publisher(String, 'orders', 10)
-# Arguments:
-# - String: Message type (std_msgs/msg/String)
-# - 'orders': Topic name
-# - 10: Queue size (max messages to buffer if subscriber is slow)
-```
-
-**Publishing a Message**:
-```python
-msg = String()
-msg.data = 'Order #1: Burger'
-self.publisher.publish(msg)
-```
-
-### Key Concepts in Subscriber Code
-
-**Creating a Subscription**:
-```python
-self.subscription = self.create_subscription(
-    String,          # Message type
-    'orders',        # Topic name
-    self.order_callback,  # Callback function
-    10               # Queue size
-)
-```
-
-**Callback Function**:
-```python
-def order_callback(self, msg):
-    # This runs automatically when a message arrives
-    print(f'Received: {msg.data}')
-```
-
-## Registering Your Nodes
+## Registering Your Node
 
 Update `setup.py` with entry points for both nodes:
+Edit: ~/ros2_ws/src/test2_py_pkg/setup.py
 
-```python
+```python 
 entry_points={
     'console_scripts': [
-        'waiter=test2_py_pkg.waiter:main',
-        'chef=test2_py_pkg.chef:main',
+        'my_first_node = test2_py_pkg.mynode:main',
+        # ADD THIS LINE:
+        'create_topic = test2_py_pkg.topic_creator:main',
     ],
-},
+}
+
 ```
 
 ## Building and Running
