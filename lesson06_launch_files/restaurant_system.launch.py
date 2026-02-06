@@ -1,10 +1,5 @@
-
-
-#!/usr/bin/env python3
-
 from launch import LaunchDescription
 from launch_ros.actions import Node
-
 
 def generate_launch_description():
     return LaunchDescription([
@@ -12,12 +7,6 @@ def generate_launch_description():
             package='test2_py_pkg',
             executable='my_first_node',
             name='my_first_node',
-            output='screen',
-        ),
-        Node(
-            package='test2_py_pkg',
-            executable='create_topic',
-            name='create_topic',
             output='screen',
         ),
         Node(
@@ -32,6 +21,7 @@ def generate_launch_description():
             name='chef',
             output='screen',
         ),
+        # MUST BE HERE:
         Node(
             package='test2_py_pkg',
             executable='restaurant_server',
@@ -43,8 +33,5 @@ def generate_launch_description():
             executable='restaurant_client',
             name='restaurant_client',
             output='screen',
-            # Example args; you can customize or pass from command line
-            arguments=['burger', '2'],
         ),
     ])
-
