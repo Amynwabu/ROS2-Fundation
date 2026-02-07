@@ -1,8 +1,8 @@
-# ROS2 MSc Applied AI - Teaching Materials
+# ROS2 Foundation - Teaching Materials
 
 
-[![Open in Dev Container](https://img.shields.io/badge/Dev_Container-Open-blue?logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Amynwabu/ros2-msci-applied-ai)
-ROS2 teaching materials for MSc Applied AI students - includes code examples, packages, and tutorials organized by lesson.
+[![Open in Dev Container](https://img.shields.io/badge/Dev_Container-Open-blue?logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Amynwabu/ROS2-Foundation)
+ROS2 teaching materials- includes code examples, packages, and tutorials organized by lesson.
 
 ## 📋 Prerequisites
 
@@ -13,54 +13,31 @@ ROS2 teaching materials for MSc Applied AI students - includes code examples, pa
 
 ## 🚀 Getting Started
 
-### Option 1: Use Dev Container (Recommended) ✨
-
-The easiest way to get started! This repository includes a pre-configured VS Code Dev Container with ROS2 Humble.
-
-**One-Click Setup:**
-
-1. Install [VS Code](https://code.visualstudio.com/) and [Docker](https://www.docker.com/products/docker-desktop/)
-2. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-3. Click the badge above or use this link:
-   - [![Open in Dev Container](https://img.shields.io/badge/Dev_Container-Open-blue?logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/Amynwabu/ros2-msci-applied-ai)
-
-**Or manually:**
-```bash
-# Clone and open in VS Code
-git clone https://github.com/Amynwabu/ros2-msci-applied-ai.git
-cd ros2-msci-applied-ai
-code .
-# Then: Ctrl+Shift+P -> "Dev Containers: Reopen in Container"
-```
-
-**What's Included:**
-- 🐳 ROS2 Humble Desktop Full (pre-installed)
-- 🐍 Python 3.10 with all ROS2 tools
-- 🛠️ VS Code extensions for ROS2, Python, C++
-- 📦 Colcon build tools pre-configured
-- ✅ Everything works out of the box!
-
-### Option 2: Manual Local Setup
-
-### Clone the Repository
+## Export Workspace
 
 ```bash
-cd ~/ros2_ws/src
-git clone https://github.com/Amynwabu/ros2-msci-applied-ai.git
+### Download the zip file                                 
+wget "https://github.com/Amynwabu/ROS2-Fundation/raw/main/ros2_ws.zip"
+
+### Create and extract into workspace
+
+source /opt/ros/humble/setup.bash       # ensure Humble env
+mkdir -p ~/ros2_ws/src
+unzip ros2_ws.zip -d ~/ros2_ws/src/     # extract contents to src/
 cd ~/ros2_ws
-colcon build --packages-select test2_py_pkg
-source install/setup.bash
 ```
+
 
 ## 📚 Repository Structure
-
+```
 The repository is organized by lessons, with each folder containing:
 - Working code files
 - Documentation and instructions
 - Examples you can run directly
+```
 
 ```
-ros2-msci-applied-ai/
+ROS2-Foundation/
 ├── README.md
 ├── lesson01_environment_workspace/
 │   ├── README.md
@@ -85,44 +62,7 @@ ros2-msci-applied-ai/
     └── README.md
 ```
 
-## 🎯 How to Use This Repository
 
-### For Students
-
-1. **Clone the repository** instead of copying code from slides
-2. **Open files in VS Code** for coding tasks
-3. **Follow the README** in each lesson folder for step-by-step instructions
-4. **Run the examples** to see working code in action
-5. **Modify and experiment** with the code to deepen your understanding
-
-### For Instructors
-
-When showing code on slides, reference the GitHub location:
-- "Code in GitHub: `lesson02_packages_nodes/test2_py_pkg/mynode.py`"
-- Encourage students to open files from the cloned repo in VS Code
-- All code is pre-tested and syntax-verified
-
-## 📖 Lesson Overview
-
-### Lesson 01: Environment & Workspace
-- Check ROS2 installation
-- Create and configure workspace
-- Understand workspace structure
-
-### Lesson 02: Packages & Nodes
-- Create ROS2 Python packages
-- Build and understand nodes
-- Package configuration and setup
-
-### Lesson 03: Topics - Publish & Subscribe
-- Create publishers and subscribers
-- Understand topic communication
-- Message passing between nodes
-
-### Lesson 04: Build & Run
-- Build packages with colcon
-- Source workspace
-- Run nodes and debug
 
 ## 🔧 Building and Running Examples
 
